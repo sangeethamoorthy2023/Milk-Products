@@ -39,28 +39,44 @@ def order():
 @app.route('/open', methods=('GET', 'POST'))
 def login():
     return render_template('login.html')
+@app.route('/loginopen', methods=['POST'])
+def loginopen():
+    email = request.form['email']
+    password = request.form['password']
+
+    user = collection.find_one({'email': email, 'password': password})
+
+    if user:
+        # Login successful
+        return  render_template('index.html')
+    else:
+        # Login failed
+        return "Invalid credentials. Please try again."
+
 
 #===========Sign up=======================
 @app.route('/signup')
 def sign():
     return render_template('signup.html')
 
+
 @app.route('/signupadd', methods=['POST'])
-def add():
-    username = request.form['username']
+def signupadd():
+    name = request.form['name']
     email = request.form['email']
     password = request.form['password']
-    
-    existing_user = collection.find_one({'username': username})
-    
-    if existing_user:
-        return 'User already exists!'
-    else:
-     
-        collection.insert_one({'username': username, 'password': password,'email':email})
-        return render_template('login.html')
 
+    # Insert data into MongoDB
+    user_data = {
+        'name': name,
+        'email': email,
+        'password': password
+    }
 
+    collection.insert_one(user_data)
+
+    # You can add further logic or redirect the user to another page after successful submission
+    return "Form submitted successfully!"
 
 if __name__ == '__main__':
     app.run(debug=True)
