@@ -12,6 +12,11 @@ collection = db['test_collection']
 def index():
     return render_template('index.html')
 
+#=========Products page================
+
+@app.route('/product')
+def product():
+    return render_template('product.html')
 
 @app.route('/open', methods=('GET', 'POST'))
 def login():
