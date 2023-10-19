@@ -3,7 +3,7 @@ from pymongo import MongoClient
 
 app = Flask(__name__)
 
-# First you can Install mongo db in ur local machine  and mongodb studio
+# First you can Install mongo db in ur local mechine  and mongodb studio
 client = MongoClient('mongodb://localhost:27017/')
 db = client['test_db']
 collection = db['test_collection']
@@ -30,7 +30,7 @@ def about():
 def contact():
     return render_template('contact.html')
 
-#==========Order now==================
+#==========Oreder now==================
 @app.route('/order')
 def order():
     return render_template('order.html')
@@ -76,7 +76,7 @@ def signupadd():
     collection.insert_one(user_data)
 
     # You can add further logic or redirect the user to another page after successful submission
-    return "Form submitted successfully!"
+    return render_template('login.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
